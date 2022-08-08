@@ -1,0 +1,27 @@
+version: "3.7"
+
+services:
+  db:
+    image: postgres:15
+    container_name: db
+    restart: always
+    expose:
+      - 4321
+    ports:
+      - 4321:4321
+    command: -p 4321
+    environment:
+      POSTGRES_USER: notifications
+      POSTGRES_PASSWORD: notifications
+      POSTGRES_DB: notifications_production
+    volumes:
+      - pgdata:/data/postgres
+  queue:
+    image: redis:6
+    container_name: queue
+    restart: always
+    ports:
+      - 6379:6379
+
+volumes:
+  pgdata:

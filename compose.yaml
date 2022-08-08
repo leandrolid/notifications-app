@@ -1,0 +1,23 @@
+version: "3.7"
+
+include:
+  - path: compose-db.yaml
+
+services:
+  app:
+    build: .
+    container_name: notifications
+    command: npm run start:dev
+    ports:
+      - 4000:4000
+    volumes:
+      - .:/app
+    environment:
+      NODE_ENV: development
+    network_mode: "host"
+    depends_on:
+      - db
+      - queue
+
+volumes:
+  pgdata:
